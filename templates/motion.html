@@ -1,11 +1,85 @@
 <!DOCTYPE html>
-    <head>
-        <title>Motion Detector</title>
-    </head>
+<head>
 
-    <body>
-        <h1>Motion Dector<h1>
-        <h2>The motion detector reads {{ state }} in the past 30 seconds</h2>
-    </body>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',
+filename='bower_components/c3/c3.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',
+filename='bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+<style>
+
+#chart {
+    padding-left: 10px;
+    width: 95%;
+}
+</style>
+    <title>Motion Detector</title>
+</head>
+
+<body>
+    <h1>Motion Detector</h1>
+    <p>Time is on the x axis, the latest reading is on the furthest right-hand side.</p>
+
+    <p>On the y axis, a 1 value means motion was detected. A 0 means no motion
+was detected.</p> 
+ 
+    <div id="chart"></div>
+
+<!-- libs -->
+    <script type="text/javascript" src="{{ url_for('static',
+filename='bower_components/d3/d3.min.js') }} "></script>
+    <script type="text/javascript" src="{{ url_for('static',
+filename='bower_components/c3/c3.js') }} "></script>
+
+<!-- c3js -->
+<script type="text/javascript">
+    
+    var chart = c3.generate({
+       bindto: '#chart',
+       data: {
+            x: 'time',
+            xFormat: '%Y-%m-%d %H:%M:%S',
+            url: '/data/pir'
+       },
+       axis: {
+          x: {
+            label: {
+                text: 'Time',
+                position: 'inner-center'
+            },
+            type: 'timeseries',
+            tick: {
+                format: '%I:%M %p'
+                }
+            },
+          y: {
+            type: 'categories',
+            label: {
+                text: "Motion",
+                position: 'inner-middle' 
+            }
+          }
+ 
+       }
+         
+    });
+
+   
+   function loadData(){
+        console.log('new data loaded');
+        chart.load({ 
+            x: 'time',
+            xFormat: '%Y-%m-%d %H:%M:%S',
+            url:'/data/pir' 
+        });  
+    }
+
+    //load new data every 60 seconds
+    var t = setInterval( loadData, 60000);
+
+
+
+</script>
+
+</body>
 
 </html>

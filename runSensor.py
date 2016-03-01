@@ -4,6 +4,7 @@ import RPi.GPIO as GPIO
 import time
 import datetime
 import csv
+import os
 
 #connects to middle plug
 sensor = 17
@@ -20,12 +21,23 @@ current_state = False
 states = []
 
 #date formatter
-formatter = "%H:%M:%S"
+formatter = "%Y-%m-%d %H:%M:%S"
 
-#open csv for writing
-output_file = open('pir_state.csv', 'w+')
+#yesterday's data
+filename = '/home/pi/Desktop/scripts/motion_detector/data/pir_state.csv'
+
+#delete file if it exists
+try:
+    os.remove(filename)
+except OSError:
+    pass
+
+#open csv for appending
+output_file = open('/home/pi/Desktop/scripts/motion_detector/data/pir_state.csv', 'w')
 #make a writer object
 writer = csv.writer(output_file)
+#write headers
+writer.writerow(['time', 'state'])
 
 def recordChange(state):
     #record time 
@@ -57,9 +69,9 @@ while True:
     #log state to the console
     print(current_state)
   
-    #if list is 10 items long (set to a minute in production):
-    if len(states) >= 10:
-        print("Checking 10 second record!")
+    #if list is 60 items long log value to csv
+    if len(states) >= 60:
+        print("Checking 60 second record!")
         #if list contains a 1(true) 
         if states.count(1) >= 1:
             recordChange(1) 
