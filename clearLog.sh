@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
 #clear messages
-sudo logrotate -f /etc/logrotate.d/rsyslog
-sudo logrotate -f /etc/logrotate.conf
+logrotate -f /etc/logrotate.d/rsyslog
+logrotate -f /etc/logrotate.conf
+
+#clear nohup
+> /nohup.out

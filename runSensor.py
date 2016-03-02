@@ -26,20 +26,21 @@ formatter = "%Y-%m-%d %H:%M:%S"
 #yesterday's data
 filename = '/home/pi/Desktop/scripts/motion_detector/data/pir_state.csv'
 
-#delete file if it exists
-try:
-    os.remove(filename)
-except OSError:
-    pass
-
 #open csv for appending
-output_file = open('/home/pi/Desktop/scripts/motion_detector/data/pir_state.csv', 'w')
+output_file = open(filename, 'wb')
 #make a writer object
 writer = csv.writer(output_file)
 #write headers
 writer.writerow(['time', 'state'])
+#close the file
+output_file.close()
 
 def recordChange(state):
+    #open the file in append mode
+    f = open(filename, 'ab')
+    #make csv writer
+    w = csv.writer(f)    
+
     #record time 
     now = datetime.datetime.now().strftime(formatter)
             
@@ -49,11 +50,11 @@ def recordChange(state):
     else:
         print "there was no change at %s" % (now)
    
-     #write to csv
-    writer.writerow([now, state])
+    #write to csv
+    w.writerow([now, state])
     
-    #flush so I can read the file from the system
-    output_file.flush()
+    #close so I can read the file from the system
+    output_file.close()
    
 
 while True:

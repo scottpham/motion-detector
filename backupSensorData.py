@@ -14,7 +14,8 @@ archiveFileName = absWorkingDir + '/archive/' + now + '.csv'
 #copy data
 shutil.copy(dataFileName, archiveFileName)
 
-
-
-
+#clear out the old file and rewrite the header
+with open(dataFileName, 'wb') as f:
+    writer = csv.writer(f)
+    writer.writerow(['time', 'state'])
 
