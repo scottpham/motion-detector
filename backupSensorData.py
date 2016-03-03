@@ -6,10 +6,10 @@ import shutil, os, datetime, csv
 now = 'yesterday'
 
 #store working dir
-absWorkingDir = '/home/pi/Desktop/scripts/motion_detector/data'
+absWorkingDir = '/home/pi/Desktop/scripts/motion_detector/static/data/'
 
-dataFileName = absWorkingDir + '/pir_state.csv'
-archiveFileName = absWorkingDir + '/archive/' + now + '.csv'
+dataFileName = absWorkingDir + 'pir_state.csv'
+archiveFileName = absWorkingDir + now + '.csv'
 
 #copy data
 shutil.copy(dataFileName, archiveFileName)

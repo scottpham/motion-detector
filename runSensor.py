@@ -24,7 +24,7 @@ states = []
 formatter = "%Y-%m-%d %H:%M:%S"
 
 #yesterday's data
-filename = '/home/pi/Desktop/scripts/motion_detector/data/pir_state.csv'
+filename = '/home/pi/Desktop/scripts/motion_detector/static/data/pir_state.csv'
 
 #open csv for appending
 output_file = open(filename, 'wb')
