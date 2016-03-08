@@ -1,6 +1,7 @@
 ##CIR Motion Detector
-Experimenting with raspberry pis to take regular readings and push the findings
-to a sensor.
+Experimenting with raspberry pis to take regular sensor readings and push the findings
+to a local website.
+![](motion_detector.png)
 
 Using [this guide](http://www.mattrichardson.com/Raspberry-Pi-Flask/index.html)
 for the Flask server.
